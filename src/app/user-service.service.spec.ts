@@ -15,21 +15,23 @@ describe('UserServiceService', () => {
     expect(service).toBeTruthy();
   }));
 
+
   /* it('should get user list', inject([UserServiceService], (userService: UserServiceService) => {
      userService.getUsers().subscribe((users: any) => {
      }, err => fail(err));
    }));*/
   it('should get user data', () => {
     const userService = TestBed.get(UserServiceService);
-    userService.getUsers().subscribe(users => {
-      console.log(`users ${users}`);
-      expect(users).toBeDefined();
+    userService.getUsers().subscribe((users) => {
+      // console.log(`user ${users}`);
+      expect(users).not.toBeDefined();
       expect(Array.isArray(users)).toBeTruthy();
-      expect(users.length).toBeGreaterThan(5);
+      expect(users.length).toBeGreaterThan(0);
       expect(users[0].id).toEqual(1);
       expect(users[0].id).not.toEqual(2);
       expect(users[0].name).toBe('vijaya');
       expect(users[0].name).not.toEqual(2);
+      expect(users[0].username).toContain('Bret');
       expect(users[0]).toEqual({
         'id': 1,
         'name': 'Leanne Graham',
@@ -48,6 +50,17 @@ describe('UserServiceService', () => {
         }
       });
     });
+  });
+  xit('success', (done) => {
+    const userService = TestBed.get(UserServiceService);
+    userService
+      .getUsers()
+      .then((response) => {
+        // console.log('My resp', response);
+        expect(response).toEqual('200');
+        done();
+      })
+      .catch(done.fail);
   });
 
 });
